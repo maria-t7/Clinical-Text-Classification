@@ -20,7 +20,11 @@ with open('model.pkl', 'rb') as f:
 
 with open('vectorizer.pkl', 'rb') as f:
     vectorizer = pickle.load(f)
-
+    
+MEDICAL_HEADERS = re.compile(
+    r'\b(subjective|objective|assessment|plan|history|diagnosis|procedure|description)\s*:', 
+    re.IGNORECASE
+)
 def clean_text(text):
     text = str(text).lower()
     text = MEDICAL_HEADERS.sub(' ', text)
