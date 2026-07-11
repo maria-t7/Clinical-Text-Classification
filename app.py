@@ -25,6 +25,16 @@ MEDICAL_HEADERS = re.compile(
     r'\b(subjective|objective|assessment|plan|history|diagnosis|procedure|description)\s*:', 
     re.IGNORECASE
 )
+
+stop_words = set(stopwords.words('english'))
+lemmatizer = WordNetLemmatizer()
+
+def get_wordnet_pos(tag):
+    if tag.startswith('J'): return wordnet.ADJ
+    elif tag.startswith('V'): return wordnet.VERB
+    elif tag.startswith('N'): return wordnet.NOUN
+    elif tag.startswith('R'): return wordnet.ADV
+    else: return wordnet.NOUN
 def clean_text(text):
     text = str(text).lower()
     text = MEDICAL_HEADERS.sub(' ', text)
